@@ -10,9 +10,13 @@ type Store struct {
 	StoreMap map[Component]map[interface{}]interface{}
 }
 
-func (s *Store) Connect(c Component) {
+func (s *Store) Connect(c Component) vecty.Component {
+	if s.StoreMap == nil {
+		s.StoreMap = make(map[Component]map[interface{}]interface{})
+	}
 	m := c.Connect()
 	s.StoreMap[c] = m
+	return c
 }
 
 func (s *Store) UpdateComponents() {

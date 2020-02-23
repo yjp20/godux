@@ -5,6 +5,7 @@ type Handler func(interface{})
 type Dispatcher struct {
 	counter   int
 	callbacks map[int]Handler
+	store     *Store
 }
 
 func (d *Dispatcher) Init() {
@@ -23,6 +24,7 @@ func (d *Dispatcher) Dispatch(action interface{}) {
 	for _, c := range d.callbacks {
 		c(action)
 	}
+	d.store.UpdateComponents()
 }
 
 func (d *Dispatcher) Unregister(id int) {
